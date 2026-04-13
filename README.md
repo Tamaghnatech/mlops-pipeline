@@ -6,6 +6,7 @@
 [![DagsHub](https://img.shields.io/badge/DagsHub-MLflow%20%7C%20DVC-orange)](https://dagshub.com/Tamaghnatech/mlops-pipeline)
 [![API](https://img.shields.io/badge/API-Live%20on%20Render-6c63ff)](https://churn-prediction-api-ykim.onrender.com/docs)
 [![Dashboard](https://img.shields.io/badge/Dashboard-Streamlit%20Cloud-ff4b4b)](https://mlops-pipeline-d3n72rexzfzdhs7jjbpaal.streamlit.app)
+[![Monitoring](https://img.shields.io/badge/Monitoring-Streamlit%20Cloud-00cc66)](https://mlops-pipeline-uyz7jrqinegdhqd9h2gru5.streamlit.app)
 
 ---
 
@@ -20,6 +21,53 @@
 | DagsHub Repository | https://dagshub.com/Tamaghnatech/mlops-pipeline |
 
 > **Note:** The Render API free tier spins down after 15 minutes of inactivity. First request takes ~60 seconds to wake up. Open the /docs URL before demoing.
+
+---
+
+## Screenshots
+
+### Prediction API — FastAPI Swagger UI
+> https://churn-prediction-api-ykim.onrender.com/docs
+
+![Churn Prediction API Swagger UI](prredictionapiswagger.jpeg)
+
+Auto-generated interactive documentation. Hit `/predict` directly from the browser, inspect request/response schemas, and test all 4 endpoints live — root, health, predict, model-info.
+
+---
+
+### Prediction Dashboard — Streamlit
+> https://mlops-pipeline-d3n72rexzfzdhs7jjbpaal.streamlit.app
+
+![Churn Prediction Dashboard](predictiondashboard.jpeg)
+
+Dark-themed dashboard with a live gauge chart showing churn risk score. This customer scored **24.4% — Low risk, Will Stay**, 12 months tenure. Supports both single predictions and batch CSV scoring for thousands of customers at once.
+
+---
+
+### Monitoring Dashboard — Drift Detection
+> https://mlops-pipeline-uyz7jrqinegdhqd9h2gru5.streamlit.app
+
+![MLOps Monitoring Dashboard](monitoringdashboard.jpeg)
+
+Real-time drift monitoring showing **50% feature drift (8/19 features)**, drift history line chart over 3 runs with the 20% threshold line marked, and a feature breakdown donut chart. Data loads from GitHub automatically.
+
+---
+
+### MLflow Experiment Tracking — DagsHub
+> https://dagshub.com/Tamaghnatech/mlops-pipeline/experiments
+
+![MLflow Experiments on DagsHub](mlflowexp.jpeg)
+
+**12 experiment runs** tracked automatically. Every run shows accuracy, F1 score, ROC AUC, and model parameters side by side. The CI/CD pipeline logs a new run on every git push to master.
+
+---
+
+### DagsHub Repository
+> https://dagshub.com/Tamaghnatech/mlops-pipeline
+
+![DagsHub Repository](dagsrepo.jpeg)
+
+Complete project repository on DagsHub showing all files, **24 commits**, full commit history, and native DVC + MLflow + Git integration tabs.
 
 ---
 
@@ -148,7 +196,6 @@ python monitoring/drift_monitoring.py --simulate
 ## API Usage
 
 ```bash
-# Predict churn for a single customer
 curl -X POST "https://churn-prediction-api-ykim.onrender.com/predict" \
   -H "Content-Type: application/json" \
   -d '{
@@ -254,15 +301,10 @@ Monitoring dashboard updated (commit + push history JSON)
 ## Lessons Learned
 
 1. **Pin every package version** — `pip install mlflow` today installs a different version than tomorrow. Pinning prevents unexpected breakage.
-
 2. **Windows has unique gotchas** — PowerShell vs CMD, curl aliasing, CRLF line endings. Know your environment.
-
 3. **Version conflicts are normal** — We hit 3 separate version conflicts (uvicorn, griffe, pathspec). The fix is always the same: read the error, find the incompatible constraint, downgrade one package.
-
 4. **Separate serving requirements** — Your training container needs XGBoost, DVC, MLflow, Prefect. Your serving container only needs FastAPI, scikit-learn, and numpy. Keep them separate.
-
 5. **F1 > Accuracy for imbalanced data** — 79.7% accuracy sounds good but a model predicting "never churn" would get 73% accuracy. ROC AUC and F1 are more meaningful.
-
 6. **Free tier is surprisingly capable** — This entire system runs for free. Render, Streamlit Cloud, DagsHub, Prefect Cloud, GitHub Actions, Slack — all free.
 
 ---
@@ -279,7 +321,7 @@ See `MLOps_Pipeline_Complete_Documentation.docx` for the full build guide includ
 
 ## Author
 
-**Tamaghna Nag** — Machine Learning Engineer  
+**Tamaghna Nag** — Machine Learning Engineer
 London, UK | [GitHub](https://github.com/Tamaghnatech) | [DagsHub](https://dagshub.com/Tamaghnatech)
 
 ---
