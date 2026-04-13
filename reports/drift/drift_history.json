@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "20260414_040531",
+    "dataset_drift_detected": false,
+    "drift_share": 0.5,
+    "n_drifted_features": 8,
+    "n_total_features": 19,
+    "report_path": "reports\\drift\\drift_report_20260414_040531.html",
+    "threshold_used": 0.2,
+    "retraining_triggered": false
+  },
+  {
+    "timestamp": "20260414_040535",
+    "dataset_drift_detected": false,
+    "drift_share": 0.5,
+    "n_drifted_features": 8,
+    "n_total_features": 19,
+    "report_path": "reports\\drift\\drift_report_20260414_040535.html",
+    "threshold_used": 0.2,
+    "retraining_triggered": false
+  },
+  {
+    "timestamp": "20260414_040538",
+    "dataset_drift_detected": false,
+    "drift_share": 0.5,
+    "n_drifted_features": 8,
+    "n_total_features": 19,
+    "report_path": "reports\\drift\\drift_report_20260414_040538.html",
+    "threshold_used": 0.2,
+    "retraining_triggered": false
+  }
+]
