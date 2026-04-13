@@ -75,7 +75,7 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("### API Status")
     try:
-        r = requests.get("http://127.0.0.1:8001/health", timeout=2)
+        r = requests.get("https://churn-prediction-api-ykim.onrender.com/health", timeout=10)
         if r.status_code == 200:
             st.success("API Online")
         else:
