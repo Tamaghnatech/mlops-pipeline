@@ -22,7 +22,10 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install "pathspec==0.12.1"
+          pip install "griffe==0.49.0"
 
       - name: Pull data from DVC
         env:
