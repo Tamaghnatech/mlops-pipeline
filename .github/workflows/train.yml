@@ -1,0 +1,41 @@
+name: ML Training Pipeline
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'src/**'
+      - 'config/**'
+      - 'pipelines/**'
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Pull data from DVC
+        env:
+          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+        run: |
+          dvc remote modify dagshub --local auth basic
+          dvc remote modify dagshub --local user Tamaghnatech
+          dvc remote modify dagshub --local password $DAGSHUB_TOKEN
+          dvc pull
+
+      - name: Run training pipeline
+        env:
+          MLFLOW_TRACKING_URI: https://dagshub.com/Tamaghnatech/mlops-pipeline.mlflow
+          MLFLOW_TRACKING_USERNAME: Tamaghnatech
+          MLFLOW_TRACKING_PASSWORD: ${{ secrets.40ea2101c09fbfd9b188d3ea1161d842ff3cb1b9 }}
+        run: python pipelines/training_pipeline.py
