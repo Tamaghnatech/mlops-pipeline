@@ -23,7 +23,10 @@ build/
 mlruns/
 
 # Reports
-reports/
+reports/*
+!reports/drift/drift_history.json
+!reports/drift/latest_drift_summary.json
+!reports/metrics.json
 
 # VS Code
 .vscode/
