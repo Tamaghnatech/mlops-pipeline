@@ -1,0 +1,35 @@
+# Virtual environment
+venv/
+.env
+config/secrets.env
+
+# Data (versioned by DVC, not Git)
+data/raw/
+data/processed/
+models/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# MLflow
+mlruns/
+
+# Reports
+reports/
+
+# VS Code
+.vscode/
+
+# DVC internal (keep dvc.lock, ignore cache)
+.dvc/cache/
+.dvc/tmp/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
