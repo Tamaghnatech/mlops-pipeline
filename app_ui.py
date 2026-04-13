@@ -65,7 +65,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-API_URL = "http://127.0.0.1:8001/predict"
+API_URL = "https://churn-prediction-api-ykim.onrender.com/predict"
 
 # ── Sidebar ──────────────────────────────────────────────────
 with st.sidebar:
