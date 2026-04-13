@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import json
+import requests as req
 from pathlib import Path
 
 st.set_page_config(
@@ -41,10 +42,17 @@ st.markdown("---")
 
 drift_summary_path = Path("reports/drift/latest_drift_summary.json")
 drift_reports_dir  = Path("reports/drift")
+GITHUB_RAW = "https://raw.githubusercontent.com/Tamaghnatech/mlops-pipeline/master"
 
 def load_drift_summary():
     if drift_summary_path.exists():
         return json.loads(drift_summary_path.read_text())
+    try:
+        r = req.get(f"{GITHUB_RAW}/reports/drift/latest_drift_summary.json", timeout=10)
+        if r.status_code == 200:
+            return r.json()
+    except:
+        pass
     return None
 
 def load_all_drift_reports():
@@ -53,11 +61,30 @@ def load_all_drift_reports():
         try:
             return json.loads(history_path.read_text())
         except:
-            return []
+            pass
+    try:
+        r = req.get(f"{GITHUB_RAW}/reports/drift/drift_history.json", timeout=10)
+        if r.status_code == 200:
+            return r.json()
+    except:
+        pass
     return []
+
+def load_metrics():
+    metrics_path = Path("reports/metrics.json")
+    if metrics_path.exists():
+        return json.loads(metrics_path.read_text())
+    try:
+        r = req.get(f"{GITHUB_RAW}/reports/metrics.json", timeout=10)
+        if r.status_code == 200:
+            return r.json()
+    except:
+        pass
+    return None
 
 summary     = load_drift_summary()
 all_reports = load_all_drift_reports()
+metrics     = load_metrics()
 
 col1, col2, col3, col4, col5 = st.columns(5)
 
@@ -153,9 +180,7 @@ else:
 st.markdown("---")
 
 st.markdown("### Latest Training Metrics")
-metrics_path = Path("reports/metrics.json")
-if metrics_path.exists():
-    metrics = json.loads(metrics_path.read_text())
+if metrics:
     c1, c2, c3 = st.columns(3)
     c1.metric("Accuracy", f"{metrics.get('accuracy', 0):.1%}")
     c2.metric("F1 Score", f"{metrics.get('f1', 0):.1%}")
@@ -174,11 +199,12 @@ if summary:
             html_content = f.read()
         st.components.v1.html(html_content, height=600, scrolling=True)
     else:
-        st.info("Report file not found.")
+        st.info("Evidently HTML report only available when running locally.")
 
 st.markdown("---")
 st.markdown(
-    "<p style='color: #888; font-size: 12px;'>Run "
-    "<code>python monitoring/drift_monitoring.py --simulate</code> to generate new data.</p>",
+    "<p style='color: #888; font-size: 12px;'>Data loaded from GitHub. "
+    "Run <code>python monitoring/drift_monitoring.py --simulate</code> "
+    "and push to update this dashboard.</p>",
     unsafe_allow_html=True
 )
