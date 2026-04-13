@@ -4,7 +4,8 @@ venv/
 config/secrets.env
 
 # Data (versioned by DVC, not Git)
-data/raw/
+data/raw/*
+!data/raw/*.dvc
 data/processed/
 models/
 
