@@ -37,5 +37,5 @@ jobs:
         env:
           MLFLOW_TRACKING_URI: https://dagshub.com/Tamaghnatech/mlops-pipeline.mlflow
           MLFLOW_TRACKING_USERNAME: Tamaghnatech
-          MLFLOW_TRACKING_PASSWORD: ${{ secrets.40ea2101c09fbfd9b188d3ea1161d842ff3cb1b9 }}
+          MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
         run: python pipelines/training_pipeline.py
