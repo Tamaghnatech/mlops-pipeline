@@ -76,3 +76,10 @@ with mlflow.start_run():
         json.dump({"accuracy": acc, "f1": f1, "roc_auc": roc_auc}, f, indent=2)
 
 print("Training complete!")
+# Save model locally for serving
+import pickle
+from pathlib import Path
+Path("models").mkdir(exist_ok=True)
+with open("models/model.pkl", "wb") as f:
+    pickle.dump(model, f)
+print("Model saved to models/model.pkl")
